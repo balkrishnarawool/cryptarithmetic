@@ -6,31 +6,31 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 record Generator(List<Variable> variables, boolean uniqueValues) {
 
-    void forEachCombination(Consumer<Map<String, Integer>> consumer) {
+    List<Map<String, Integer>> combinations() {
         var values = new int[variables.size()];
-        dfs(0, values, consumer);
+        return dfs(0, values, new ArrayList<>());
     }
 
-    private void dfs(int i, int[] values, Consumer<Map<String, Integer>> consumer) {
+    private List<Map<String, Integer>> dfs(int i, int[] values, List<Map<String, Integer>> accumulator) {
         if (i < values.length) { //non-leaf nodes
             var nextValues = getNextValuesFor(i, values);
             for (var newValues : nextValues) {
                 if (!uniqueValues || allValuesUnique(newValues, i + 1)) {
-                    dfs(i + 1, newValues, consumer);
+                    dfs(i + 1, newValues, accumulator);
                 }
             }
         }
         if (i == values.length) { // leaf nodes
             if (!uniqueValues || allValuesUnique(values, i)) {
-                consumer.accept(createVarValuesMap(values));
+                accumulator.add(createVarValuesMap(values));
             }
         }
+        return accumulator;
     }
 
     private Map<String, Integer> createVarValuesMap(int[] values) {

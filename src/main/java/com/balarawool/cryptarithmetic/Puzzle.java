@@ -8,14 +8,15 @@ import java.util.Map;
 
 record Puzzle(List<Variable> variables, List<PuzzleConstraint> constraints) {
 
-    void solve() {
+    public Map<String, Integer> solve() {
         var uniqueValuesNeeded = constraints.stream().anyMatch(constraint -> constraint instanceof UniqueValuesConstraint);
         var generator = new Generator(variables, uniqueValuesNeeded);
-        generator.forEachCombination(values -> {
+        for (var values: generator.combinations()) {
             if (isSolution(values)) {
-                System.out.println(values);
+                return values;
             }
-        });
+        }
+        throw new IllegalStateException("No solution found!");
     }
 
     private boolean isSolution(Map<String, Integer> values) {
