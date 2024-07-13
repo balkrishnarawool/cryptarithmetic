@@ -10,4 +10,5 @@ If you have questions, suggestions to improve or any other feedback, please reac
 ## Links to articles on Data Oriented Programming
 
 [InfoQ Article from Brian Goetz](https://www.infoq.com/articles/data-oriented-programming-java/)
+
 [Inside Java Article from Nicolai Parlog](https://inside.java/2024/05/23/dop-v1-1-introduction/)
