@@ -50,12 +50,11 @@ class PuzzleTest {
                 ------
                  MONEY
                 """;
-        var solution = STR."""
-                  \{values.get("S")}\{values.get("E")}\{values.get("N")}\{values.get("D")}
-                + \{values.get("M")}\{values.get("O")}\{values.get("R")}\{values.get("E")}
-                ------
-                 \{values.get("M")}\{values.get("O")}\{values.get("N")}\{values.get("E")}\{values.get("Y")}
-                """;
+        var solution = ""+
+                "  "+values.get("S")+values.get("E")+values.get("N")+values.get("D")+"\n"+
+                "+ "+values.get("M")+values.get("O")+values.get("R")+values.get("E")+"\n"+
+                "------"+"\n"+
+                " "+values.get("M")+values.get("O")+values.get("N")+values.get("E")+values.get("Y");
         System.out.println(equation);
         System.out.println(solution);
     }

@@ -9,23 +9,23 @@ import java.util.Map;
 record Puzzle(List<Variable> variables, List<PuzzleConstraint> constraints) {
 
     public Map<String, Integer> solve() {
-        var uniqueValuesNeeded = constraints.stream().anyMatch(constraint -> constraint instanceof UniqueValuesConstraint);
-        var generator = new Generator(variables, uniqueValuesNeeded);
+        var uniqueValues = constraints.stream().anyMatch(constraint -> constraint instanceof UniqueValuesConstraint);
+        var generator = new Generator(variables, uniqueValues);
         for (var values: generator.combinations()) {
-            if (isSolution(values)) {
+            if (isSolution(values, uniqueValues)) {
                 return values;
             }
         }
         throw new IllegalStateException("No solution found!");
     }
 
-    private boolean isSolution(Map<String, Integer> values) {
-        return constraints.stream().allMatch(constraint -> isSatisfied(constraint, values));
+    private boolean isSolution(Map<String, Integer> values, boolean uniqueValues) {
+        return constraints.stream().allMatch(constraint -> isSatisfied(constraint, values, uniqueValues));
     }
 
-    private boolean isSatisfied(PuzzleConstraint constraint, Map<String, Integer> values) {
+    private boolean isSatisfied(PuzzleConstraint constraint, Map<String, Integer> values, boolean uniqueValues) {
         return switch (constraint) {
-            case UniqueValuesConstraint _ -> true;
+            case UniqueValuesConstraint _ -> uniqueValues;
             case EqualityConstraint equalityConstraint -> equalityConstraint.holdsTrueFor(values);
         };
     }

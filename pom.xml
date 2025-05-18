@@ -21,7 +21,9 @@
                 <configuration>
                     <source>23</source>
                     <target>23</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
+<!--                    You can enable preview if you're using latest JDK.-->
+<!--                    But as all required features are finalized already in JDK, you don;t have to.-->
+<!--                    <compilerArgs>&#45;&#45;enable-preview</compilerArgs>-->
                 </configuration>
             </plugin>
         </plugins>
